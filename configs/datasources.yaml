@@ -1,0 +1,11 @@
+#This files enables grafana to have a datasource already hook up in the login
+apiVersion: 1
+
+datasource:
+  -name: Loki
+  type: loki
+  access: proxy
+  url: http://loki:3100
+  jsonData:
+    timeout: 60
+    maxLines: 1000
