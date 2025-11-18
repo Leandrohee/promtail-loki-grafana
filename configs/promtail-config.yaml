@@ -1,0 +1,29 @@
+#Promtail scraps the logs in a server/folder
+
+#Configures the server
+server:
+  http_listen_address: ${PROMTAIL_CONTAINER_NAME}
+  http_listen_port: ${PROMTAIL_PORT}
+
+#Specifies the file path where Loki will store the positions of log entries. This information helps Loki keep track of which log entries it has already ingested.
+positions:
+  filename: /tmp/positions.yaml
+
+#Specifies the Loki server URL that Promtail should push logs to.
+clients:
+  #- url: ${LOKI_CONTAINER_NAME}:${LOKI_PORT}/loki/api/v1/push
+  - url: http://loki:3100/loki/api/v1/push
+
+#Configures how Promtail can scrape logs from a series of targets using a specified discove
+#Promtail uses the same Prometheus scrape_configs
+#static_configs/targets: Static targets to scrape
+#static_configs/targets/labels:  Defines a file to scrape and an optional set of additional labels to apply to
+#static_configs/targets/labels/job/__path__:  The path to load logs from.
+scrape_configs:
+- job_name: system
+  static_configs:
+  - targets: 
+    - "localhost"
+    labels:
+      job: varlogs
+      __path__: /var/log/custom_logs/*log

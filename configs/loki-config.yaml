@@ -1,0 +1,38 @@
+#Enables authentication through the X-Scope-OrgID header, which must be resent if true
+auth_enabled: false
+
+#Configures the server
+server:
+  http_listen_address: ${LOKI_CONTAINER_NAME}
+  http_listen_port: ${LOKI_PORT}
+
+#Common: configuration to be shared between multiple modules
+#instance_addr: Loki's instance address is set to localhost
+#path_prefix: path prefix for various operations.
+#storage: Specifies Loki's storage configuration.
+#storage/filesystem/chunks_directory: Directory for storing chunk
+#storage/filesystem/rules_directory: Directory for storing rules.
+#replication_factor: 1 means single copy of each piece of data.
+#ring/kvstore/store: Loki uses an in-memory key-value store.
+common:
+  instance_addr: 127.0.0.1
+  path_prefix: /loki
+  storage:
+    filesystem:
+      chunks_directory: /loki/chunks
+      rules_directory: /loki/rules
+  replication_factor: 1
+  ring:
+    kvstore:
+      store: inmemory
+
+
+schema_config:
+  configs:
+  - from: "2024-01-01"
+    store: tsdb
+    object_store: filesystem
+    schema: v13
+    index:
+      prefix: index_
+      period: 24h
