@@ -25,5 +25,5 @@ scrape_configs:
   - targets: 
     - "localhost"
     labels:
-      job: varlogs
+      job: cerberusjwt_job
       __path__: /var/log/custom_logs/*log
