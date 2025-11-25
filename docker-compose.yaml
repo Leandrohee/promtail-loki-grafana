@@ -18,8 +18,6 @@ services:
     image: grafana/grafana
     container_name: ${GRAFANA_CONTAINER_NAME}
     env_file: .env
-    # volumes:
-      # - ./configs/datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yml
     ports:
       - ${GRAFANA_PORT}:3000
     depends_on:
